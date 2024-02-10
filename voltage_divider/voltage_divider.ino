@@ -14,7 +14,7 @@ float totalVoltage = 0.0;
 
 // define our resistences
 float R1 = 220;
-float R2 = 1000;
+float R2 = 220;
 
 void setup() {
   // put your setup code here, to run once:

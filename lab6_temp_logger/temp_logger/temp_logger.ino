@@ -22,7 +22,7 @@ File logfile;
 RTC_DS1307 rtc;
 float data;
 int i = 0;
-int N = 50; // Number of samples per file
+int N = 10; // Number of samples per file
 int waittime_ms = 500; // milliseconds between samples
 
 // ====================================================
@@ -50,7 +50,7 @@ logfile = open_next_logfile();
 }
 // ==================================================
 void loop() {
-
+  if (i < N){
   Vo = analogRead(ThermistorPin);
   R2 = R1 * (1023.0 / (float)Vo - 1.0);
   logR2 = log(R2);
@@ -62,7 +62,20 @@ void loop() {
   Serial.print(T);
   Serial.println(" F"); 
 
+  // save to logifle
+  logfile.print("Temperature: ");
+  logfile.print(T);
+  logfile.println(" F");
+
   delay(500);
+
+  i++;
+  }
+  else {
+    logfile.close();
+    i = 0;
+    logfile = open_next_logfile();
+  }
 }
 // =========================================
 // initializes the RTC,
